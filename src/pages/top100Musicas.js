@@ -4,7 +4,7 @@ import Link from "next/link";
 
 
 export default function Home() {
-    const topMusicas = top100Musicas(dadosHistory, 100);
+    const topMusicas = top100Musicas(dadosHistory);
 
     return (
         <main className="p-6">
@@ -21,9 +21,11 @@ export default function Home() {
             </div>
             <ul className="space-y-2">
                 {topMusicas.map((music, i) => (
-                    <li key={`${music.musica}  ${music.album}  ${music.artista}` } className="flex justify-between border-b pb-1">
-                        <span>{i + 1}. {music.musica} {music.album} {music.artista}  </span>
-                        <span className="text-gray-500">{music.count}</span>
+                    <li key={`${music.musica} - ${music.album}  -  ${music.artista}` } className="flex justify-between border-b pb-1">
+                        <span>{i + 1}. {music.musica} - {music.album}  -  {music.artista}  </span>
+                        
+                        <span className="text-gray-500">Plays: {music.numeroRepetido} | Time: {Math.floor(music.tempoOuvido)}H
+            </span>
                     </li>
                 ))}
             </ul>

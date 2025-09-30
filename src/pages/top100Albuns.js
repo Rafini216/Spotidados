@@ -23,7 +23,7 @@ export default function Home() {
                 {topAlbums.map((album, i) => (
                     <li key={`${album.album} - ${album.artista}`} className="flex justify-between border-b pb-1">
                         <span>{i + 1}. {album.album} {album.artista}</span>
-                        <span className="text-gray-500">{album.count}</span>
+                        <span className="text-gray-500">Plays: {album.numeroRepetido} | Time: {Math.floor(album.tempoOuvido)}H </span>
                     </li>
                 ))}
             </ul>

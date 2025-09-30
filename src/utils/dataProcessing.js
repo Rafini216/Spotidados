@@ -1,11 +1,19 @@
 import dadosHistory from "../data/history.json"
 
+
+
+
 export function contarTotalMusicas() {
   if (!dadosHistory || dadosHistory.length === 0) {
     return 0;
   }
   return dadosHistory.length;
 }
+
+
+
+
+
 
 export function obterPrimeiraMusica() {
   if (!dadosHistory || dadosHistory.length === 0) {
@@ -14,12 +22,18 @@ export function obterPrimeiraMusica() {
   return dadosHistory[0]?.master_metadata_track_name || "Música desconhecida";
 }
 
+
+
+
+
+
+
 export function encontrarArtistaMaisOuvido() {
   if (!dadosHistory || dadosHistory.length === 0) {
     return "Nenhum artista encontrado";
   }
   const contagemArtistas = {};
-  
+
   dadosHistory.forEach(musica => {
     const artista = musica.master_metadata_album_artist_name;
     if (artista) {
@@ -29,7 +43,7 @@ export function encontrarArtistaMaisOuvido() {
 
   let artistaMaisOuvido = "Nenhum artista encontrado";
   let maiorContagem = 0;
-  
+
   for (const artista in contagemArtistas) {
     if (contagemArtistas[artista] > maiorContagem) {
       maiorContagem = contagemArtistas[artista];
@@ -40,74 +54,124 @@ export function encontrarArtistaMaisOuvido() {
   return artistaMaisOuvido;
 }
 
+
+
+
+
+
 export function top100Artistas() {
   if (!dadosHistory || dadosHistory.length === 0) {
     return "Nenhum artista encontrado";
   }
-  
-  
-  const contagemArtistas = dadosHistory.reduce((acc, data) => { 
+
+
+  const contagemArtistas = dadosHistory.reduce((acc, data) => {
     const artista = data.master_metadata_album_artist_name
-    if (artista){
-      acc[artista]=(acc[artista]||0)+1
-      
-    }
+    const key =  artista;
+    if (!acc[key])
+      acc[key] = {
+        artista: artista,
+        numeroRepetido: 0,
+        tempoOuvido: 0,
+        datas: []
+      }
+    acc[key].numeroRepetido++
+    acc[key].tempoOuvido += data.ms_played / 1000 / 60 / 60
+    acc[key].datas.push(data.ts)
+
     return acc
   }, {})
 
- return Object.entries(contagemArtistas)
-    .map(([artista, count]) => ({ artista, count }))
-    .sort((a, b) => b.count - a.count)
+  return Object.values(contagemArtistas)
+    .sort((a, b) => b.numeroRepetido - a.numeroRepetido)
     .slice(0, 100);
-  }
+}
 
 
-  export function top100Musicas() {
+
+
+
+
+
+export function top100Musicas() {
   if (!dadosHistory || dadosHistory.length === 0) {
     return "Nenhum artista encontrado";
   }
-  
-  
-  const contagemMusicas = dadosHistory.reduce((acc, data) => { 
+
+
+  const contagemMusicas = dadosHistory.reduce((acc, data) => {
     const musica = data.master_metadata_track_name
     const album = data.master_metadata_album_album_name
-     const artista = data.master_metadata_album_artist_name;
+    const artista = data.master_metadata_album_artist_name;
 
-    if (musica && artista &&album ) {
-      
-      const key = `${musica}|||${artista} || ${album}`;
-      acc[key] = (acc[key] || 0) + 1;
-    }
-    return acc
+    if (musica && album && artista) {
+
+      const key = `${musica}-${album}-${artista}`
+      if (!acc[key]) {
+        acc[key] = {
+          album: album,
+          artista: artista,
+          musica: musica,
+          numeroRepetido: 0,
+          tempoOuvido: 0,
+          datas: []
+        }
+}
+        acc[key].numeroRepetido++
+        acc[key].tempoOuvido += data.ms_played / 1000 / 60 / 60
+        acc[key].datas.push(data.ts)
+
+
+
+    }return acc
   }, {})
 
- return Object.entries(contagemMusicas)
-    .map(([musica, count]) => ({ musica, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 100);
-  }
+
+  return Object.values(contagemMusicas)
+  .sort((a, b) => b.numeroRepetido - a.numeroRepetido)
+  .slice(0, 100);
+}
 
 
-    export function top100Albums() {
+
+
+
+
+
+export function top100Albums() {
   if (!dadosHistory || dadosHistory.length === 0) {
     return "Nenhum artista encontrado";
   }
-  
-  
-  const contagemAlbums = dadosHistory.reduce((acc, data) => { 
+
+
+  const contagemAlbums = dadosHistory.reduce((acc, data) => {
     const album = data.master_metadata_album_album_name
-     const artista = data.master_metadata_album_artist_name;
+    const artista = data.master_metadata_album_artist_name;
+
 
     if (album && artista) {
-      
-      const key = `${album}|||${artista}`;
-      acc[key] = (acc[key] || 0) + 1;
+
+      const key = `${album}-${artista}`;
+      if (!acc[key])
+        acc[key] = {
+          album: album,
+          artista: artista,
+          numeroRepetido: 0,
+          tempoOuvido: 0,
+          datas: []
+        }
+
+      acc[key].numeroRepetido++
+      acc[key].tempoOuvido += data.ms_played / 1000 / 60 / 60
+      acc[key].datas.push(data.ts)
+
     }
     return acc
   }, {})
 
- return Object.entries(contagemAlbums)
-    .map(([album, count]) => ({ album, count }))
-    .sort((a, b) => b.count - a.count)
+  return Object.values(contagemAlbums)
+
+    .sort((a, b) => b.numeroRepetido - a.numeroRepetido)
     .slice(0, 100);
-  }
+}
+

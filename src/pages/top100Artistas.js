@@ -23,7 +23,7 @@ export default function Home() {
         {topArtistas.map((artist, i) => (
           <li key={artist.artista} className="flex justify-between border-b pb-1">
             <span>{i + 1}. {artist.artista}</span>
-            <span className="text-gray-500">{artist.count}</span>
+            <span className="text-gray-500">Plays: {artist.numeroRepetido} | Time: {Math.floor(artist.tempoOuvido)}H </span>
           </li>
         ))}
       </ul>
