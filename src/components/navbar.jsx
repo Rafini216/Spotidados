@@ -21,6 +21,9 @@ export default function Navbar() {
           <Link href="/pesquisa" className={isActive('/pesquisa') ? 'bg-green-600 p-2' : 'p-2'}>
             🔍
           </Link>
+          <Link href="/top100Artistas" className={isActive('/top100Artistas') ? 'bg-green-600 p-2' : 'p-2'}>
+            Top 100
+          </Link>
         </div>
     </nav>
   )

@@ -1,4 +1,4 @@
-import {contarTotalMusicas, obterPrimeiraMusica, encontrarArtistaMaisOuvido} from "../utils/dataProcessing.js"
+import {contarTotalMusicas, obterPrimeiraMusica, encontrarArtistaMaisOuvido,} from "../utils/dataProcessing.js"
 
 
 export default function Home() {
