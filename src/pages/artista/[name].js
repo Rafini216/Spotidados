@@ -1,60 +1,121 @@
+// src/app/artista/[name]/page.js (ou src/pages/artista/[name].js)
 import { useRouter } from "next/router";
+import {
+  top100Artistas,
+  musicasDiferentes,
+  tempoERepeatsArtista,
+  percentagemArtista,
+  PagArtista,
+} from "../../utils/dataProcessing";
 
-import {top100Artistas, musicasDiferentes, tempoERepeatsArtista, percentagemArtista, todosArtistas, PagArtista } from "../../utils/dataProcessing";
-
-
-
-
-//Construir as páginas de todos os artistas
-
-
+// Se estiver usando App Router, substitua getStaticPaths/getStaticProps por generateStaticParams e generateMetadata
 export async function getStaticPaths() {
   const artistas = top100Artistas();
-  const paths = artistas.map(page => ({ params: { name: page.artista } }));
+  const paths = artistas.map((page) => ({ params: { name: page.artista } }));
 
   return { paths, fallback: "blocking" };
 }
 
-
-export async function getStaticProps() {
-  const artistas = PagArtista()
-
+export async function getStaticProps({ params }) {
+  const { name } = params;
   return {
-    props: { artistas },
+    props: { name },
   };
 }
-
-//Routing da página de cada artista
 
 export default function ArtistPage() {
   const router = useRouter();
   const { name } = router.query;
 
-  if (!name) return <p>Loading...</p>;
+  if (!name || typeof name !== "string") {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center text-white">
+        <p>Carregando...</p>
+      </div>
+    );
+  }
+
   const top20 = PagArtista(name);
-  const percentagem = percentagemArtista(name)
-  const tempo = tempoERepeatsArtista(name)
-  const vezes = musicasDiferentes(name)
+  const percentagem = percentagemArtista(name);
+  const tempo = tempoERepeatsArtista(name);
+  const vezes = musicasDiferentes(name);
 
   return (
-    <main className="p-6">
-      <h1 className="text-2xl font-bold mb-4">{name} — Top 20 Songs</h1>
-      <div className="flex space-x-6 mb-4 text-gray-700">
-        <span>{percentagem.toFixed(2)}% das minhas plays</span>
-        <span>{tempo.repeats} vezes</span>
-        <span>{vezes} músicas diferentes</span>
-        <span>{Math.floor(tempo.tempo/1000/60)} minutos ouvidos</span>
-      </div>
-      <ul>
-        {top20.map((music, i) => (
-          <li key={music.musica} className="flex justify-between border-b pb-1">
-            <span></span>
-            <span>{i + 1}. {music.musica} - {music.album}  </span>
+    <div className="min-h-screen bg-gradient-to-br to-black text-white p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Título */}
+        <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center md:text-left">
+          {name} — <span className="text-orange-400">Top 20 Songs</span>
+        </h1>
 
-            <span className="text-gray-500">Plays: {music.numeroRepetido} | Time: {Math.floor(music.tempoOuvido)}M </span>
-          </li>
-        ))}
-      </ul>
-    </main>
+        {/* Informações destacadas (com efeito de card) */}
+        <div className="bg-black/30 backdrop-blur-lg rounded-xl border border-orange-500/20 p-4 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="text-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+            <div className="text-orange-400 font-bold">
+              {percentagem.toFixed(2)}%
+            </div>
+            <div className="text-gray-300 text-sm">das minhas plays</div>
+          </div>
+          <div className="text-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+            <div className="text-orange-400 font-bold">{tempo.repeats}</div>
+            <div className="text-gray-300 text-sm">vezes ouvido</div>
+          </div>
+          <div className="text-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+            <div className="text-orange-400 font-bold">{vezes}</div>
+            <div className="text-gray-300 text-sm">músicas diferentes</div>
+          </div>
+          <div className="text-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+            <div className="text-orange-400 font-bold">
+              {Math.floor(tempo.tempo / 1000 / 60)}
+            </div>
+            <div className="text-gray-300 text-sm">minutos ouvidos</div>
+          </div>
+        </div>
+
+        {/* Lista de músicas */}
+        <div className="bg-black/30 backdrop-blur-lg rounded-2xl border border-orange-500/20 overflow-hidden">
+          <ul className="divide-y divide-white/10">
+            {top20.map((music, i) => (
+              <li key={music.musica} className="group">
+                <div className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
+                  {/* Faixa de luz horizontal ao passar o mouse */}
+                  <div className="absolute inset-0 -left-full group-hover:left-0 transition-left duration-500 ease-out bg-gradient-to-r from-transparent via-orange-500/10 to-transparent"></div>
+
+                  <div className="relative flex justify-between items-center flex-wrap gap-y-1">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <span className="text-orange-400 font-bold w-6 text-right">
+                        #{i + 1}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="font-medium text-lg group-hover:text-orange-300 transition-colors truncate">
+                          {music.musica}
+                        </div>
+                        <div className="text-sm text-gray-400 truncate">
+                          {music.album}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-orange-200 text-sm flex gap-3 whitespace-nowrap">
+                      <span>Plays: {music.numeroRepetido}</span>
+                      <span>Time: {Math.floor(music.tempoOuvido)}m</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Estilo para transição de faixa de luz */}
+      <style jsx global>{`
+        .transition-left {
+          transition-property: left;
+        }
+      `}</style>
+    </div>
   );
 }
+
+// Função auxiliar
+function todosArtistas() {}

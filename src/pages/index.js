@@ -17,7 +17,7 @@ export default function Home() {
     artistas: 0,
   });
 
-  // 👇 Carrega nome salvo do localStorage
+  // Carrega nome salvo do localStorage
   useEffect(() => {
     const nomeSalvo = localStorage.getItem("spotidados-nome");
     if (nomeSalvo) {
@@ -25,7 +25,7 @@ export default function Home() {
     }
   }, []);
 
-  // 👇 Carrega dados reais das músicas
+  // Carrega dados reais das músicas
   useEffect(() => {
     async function carregarDados() {
       try {
@@ -134,15 +134,15 @@ export default function Home() {
               <div className="text-white/80 text-sm">Total de reproduções</div>
             </div>
 
-            {/* Primeira música */}
+            {/* Minutos ouvidos */}
             <div className="text-center p-5 rounded-2xl backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] bg-gradient-to-b from-white/5 to-white/10">
-              {/* Ícone: vinil com "1" */}
+              {/* Ícone: vinil com M */}
               <div className="flex justify-center mb-3">
                 <div className="relative w-12 h-12">
                   <div className="w-full h-full rounded-full bg-black"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">1</span>
+                      <span className="text-white text-xs font-bold">M</span>
                     </div>
                   </div>
                   <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-white/30"></div>
@@ -154,15 +154,15 @@ export default function Home() {
               <div className="text-white/80 text-sm">Minutos ouvidos</div>
             </div>
 
-            {/* Artista mais ouvido */}
+            {/* Artistas ouvidos */}
             <div className="text-center p-5 rounded-2xl backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] bg-gradient-to-b from-white/5 to-white/10">
-              {/* Ícone: vinil com coroa */}
+              {/* Ícone: vinil com estrela */}
               <div className="flex justify-center mb-3">
                 <div className="relative w-12 h-12">
                   <div className="w-full h-full rounded-full bg-black"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-5 h-5 bg-amber-400 rounded-full flex items-center justify-center">
-                      {/* Coroa SVG simples */}
+                      {/* estrla SVG simples */}
                       <svg
                         width="20"
                         height="20"
