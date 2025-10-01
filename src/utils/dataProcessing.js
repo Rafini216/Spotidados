@@ -62,13 +62,14 @@ export function encontrarArtistaMaisOuvido() {
 
 export function top100Artistas() {
   if (!dadosHistory || dadosHistory.length === 0) {
-    return "Nenhum artista encontrado";
+    return [];
   }
-
+  
 
   const contagemArtistas = dadosHistory.reduce((acc, data) => {
     const artista = data.master_metadata_album_artist_name
     const key = artista;
+    if (!artista) return acc
     if (!acc[key])
       acc[key] = {
         artista: artista,
@@ -96,7 +97,7 @@ export function top100Artistas() {
 
 export function top100Musicas() {
   if (!dadosHistory || dadosHistory.length === 0) {
-    return "Nenhum artista encontrado";
+    return [];
   }
 
 
@@ -141,7 +142,7 @@ export function top100Musicas() {
 
 export function top100Albums() {
   if (!dadosHistory || dadosHistory.length === 0) {
-    return "Nenhum artista encontrado";
+    return [];
   }
 
 
@@ -232,7 +233,7 @@ export function vezesTocado(name) {
 
 }
 
-//build da página de cada artista e contar artistas
+//contar artistas
 
 export function todosArtistas() {
   const artistaSet = new Set();
@@ -246,7 +247,7 @@ export function todosArtistas() {
   return Array.from(artistaSet);
 }
 
-
+//contar musicas
 export function musicasDiferentes(nome) {
   const musicaSet = new Set()
   dadosHistory.forEach(data => {

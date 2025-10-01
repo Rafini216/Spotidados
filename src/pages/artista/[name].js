@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { musicasDiferentes, tempoERepeatsArtista, percentagemArtista, todosArtistas, PagArtista } from "../../utils/dataProcessing";
+import {top100Artistas, musicasDiferentes, tempoERepeatsArtista, percentagemArtista, todosArtistas, PagArtista } from "../../utils/dataProcessing";
 
 
 
@@ -9,10 +9,10 @@ import { musicasDiferentes, tempoERepeatsArtista, percentagemArtista, todosArtis
 
 
 export async function getStaticPaths() {
-  const artistas = todosArtistas();
-  const paths = artistas.map(name => ({ params: { name } }));
+  const artistas = top100Artistas();
+  const paths = artistas.map(page => ({ params: { name: page.artista } }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: "blocking" };
 }
 
 
