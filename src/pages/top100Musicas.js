@@ -35,7 +35,7 @@ export default function Home() {
                         <Link href={`/artista/${encodeURIComponent(music.artista)}`}>
                         <span>{i + 1}. {music.musica} - {music.album}  -  {music.artista}  </span>
                         </Link>
-                        <span className="text-gray-500">Plays: {music.numeroRepetido} | Time: {Math.floor(music.tempoOuvido)}H
+                        <span className="text-gray-500">Plays: {music.numeroRepetido} | Time: {Math.floor(music.tempoOuvido)}M
             </span>
                     </li>
                 ))}

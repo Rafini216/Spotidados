@@ -17,7 +17,7 @@ export default function Home() {
     async function carregarDados() {
       try {
         const total = await contarTotalMusicas();
-        const tempo = await Math.floor(tempoTotal());
+        const tempo = await Math.floor(tempoTotal()/1000/60);
         const artistas = await todosArtistas().length;
         setDados({ total, tempo, artistas });
       } catch (error) {
@@ -137,7 +137,7 @@ export default function Home() {
               <div className="text-lg font-semibold text-white truncate mb-1">
                 {dados.tempo}
               </div>
-              <div className="text-white/80 text-sm">Horas ouvidas</div>
+              <div className="text-white/80 text-sm">Minutos ouvidos</div>
             </div>
 
             {/* Artista mais ouvido */}

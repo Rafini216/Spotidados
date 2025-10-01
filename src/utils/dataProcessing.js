@@ -68,7 +68,7 @@ export function top100Artistas() {
 
   const contagemArtistas = dadosHistory.reduce((acc, data) => {
     const artista = data.master_metadata_album_artist_name
-    const key =  artista;
+    const key = artista;
     if (!acc[key])
       acc[key] = {
         artista: artista,
@@ -117,20 +117,20 @@ export function top100Musicas() {
           tempoOuvido: 0,
           datas: []
         }
-}
-        acc[key].numeroRepetido++
-        acc[key].tempoOuvido += data.ms_played / 1000 / 60 / 60
-        acc[key].datas.push(data.ts)
+      }
+      acc[key].numeroRepetido++
+      acc[key].tempoOuvido += data.ms_played / 1000 / 60
+      acc[key].datas.push(data.ts)
 
 
 
-    }return acc
+    } return acc
   }, {})
 
 
   return Object.values(contagemMusicas)
-  .sort((a, b) => b.numeroRepetido - a.numeroRepetido)
-  .slice(0, 100);
+    .sort((a, b) => b.tempoOuvido - a.tempoOuvido)
+    .slice(0, 100);
 }
 
 
@@ -163,7 +163,7 @@ export function top100Albums() {
         }
 
       acc[key].numeroRepetido++
-      acc[key].tempoOuvido += data.ms_played / 1000 / 60 / 60
+      acc[key].tempoOuvido += data.ms_played / 1000 / 60
       acc[key].datas.push(data.ts)
 
     }
@@ -172,7 +172,7 @@ export function top100Albums() {
 
   return Object.values(contagemAlbums)
 
-    .sort((a, b) => b.numeroRepetido - a.numeroRepetido)
+    .sort((a, b) => b.tempoOuvido - a.tempoOuvido)
     .slice(0, 100);
 }
 
@@ -181,14 +181,14 @@ export function top100Albums() {
 //top 20 de cada artista
 
 export function PagArtista(nome) {
-  
 
-  
+
+
   const musicas = dadosHistory.filter(
     (musica) => musica.master_metadata_album_artist_name === nome
   );
 
-   if (!dadosHistory || dadosHistory.length === 0) {
+  if (!dadosHistory || dadosHistory.length === 0) {
     return "Nenhum artista encontrado";
   }
 
@@ -203,29 +203,34 @@ export function PagArtista(nome) {
       if (!acc[key]) {
         acc[key] = {
           album: album,
-          
+
           musica: musica,
           numeroRepetido: 0,
           tempoOuvido: 0,
           datas: []
         }
-}
-        acc[key].numeroRepetido++
-        acc[key].tempoOuvido += data.ms_played / 1000 / 60 / 60
-        acc[key].datas.push(data.ts)
+      }
+      acc[key].numeroRepetido++
+      acc[key].tempoOuvido += data.ms_played / 1000 / 60
+      acc[key].datas.push(data.ts)
 
 
 
-    }return acc
+    } return acc
   }, {})
 
 
+
   return Object.values(contagemMusicas)
-  .sort((a, b) => b.numeroRepetido - a.numeroRepetido)
-  .slice(0, 20);
+    .sort((a, b) => b.tempoOuvido - a.tempoOuvido)
+    .slice(0, 20);
+
+
 }
 
+export function vezesTocado(name) {
 
+}
 
 //build da página de cada artista e contar artistas
 
@@ -242,13 +247,46 @@ export function todosArtistas() {
 }
 
 
+export function musicasDiferentes(nome) {
+  const musicaSet = new Set()
+  dadosHistory.forEach(data => {
+    if (data.master_metadata_album_artist_name === nome) {
+
+      const musica = data.master_metadata_track_name
+      if (musica) {
+        musicaSet.add(musica)
+      }
+    }
+
+})
+return musicaSet.size
+}
 
 //tempo total ouvido
 
-export function tempoTotal(){
-  return dadosHistory.reduce((acc, data) =>{
-    return acc + (data.ms_played || 0)  / 1000 / 60 / 60
+export function tempoTotal() {
+  return dadosHistory.reduce((acc, data) => {
+    return acc + (data.ms_played || 0)
   }, 0)
 
 
+}
+
+//tempo e repeats de cada artista
+export function tempoERepeatsArtista(nome) {
+  return dadosHistory.reduce((acc, data) => {
+    if (data.master_metadata_album_artist_name === nome) {
+      acc.tempo += data.ms_played || 0
+      acc.repeats++
+      return acc
+    }
+    return acc
+  }, { tempo: 0, repeats: 0 })
+}
+
+
+export function percentagemArtista(nome) {
+  const artista = tempoERepeatsArtista(nome)
+  const total = tempoTotal()
+  return (artista.tempo / total) * 100
 }
