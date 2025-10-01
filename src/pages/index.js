@@ -1,3 +1,4 @@
+// src/app/page.js (ou src/pages/index.js)
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
@@ -7,12 +8,24 @@ import {
 } from "../utils/dataProcessing";
 
 export default function Home() {
+  // Estado para o nome do usuário
+  const [nomeUsuario, setNomeUsuario] = useState("Vick");
+
   const [dados, setDados] = useState({
     total: 0,
     primeira: "",
     artista: "",
   });
 
+  // 👇 Carrega nome salvo do localStorage
+  useEffect(() => {
+    const nomeSalvo = localStorage.getItem("spotidados-nome");
+    if (nomeSalvo) {
+      setNomeUsuario(nomeSalvo);
+    }
+  }, []);
+
+  // 👇 Carrega dados reais das músicas
   useEffect(() => {
     async function carregarDados() {
       try {
@@ -28,26 +41,27 @@ export default function Home() {
   }, []);
 
   return (
-    //  Container principal com font-sans
+    // Container principal com font-sans
     <div className="font-sans flex flex-col items-center justify-center p-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-6xl">
         {/* Perfil */}
         <div className="flex flex-col items-center gap-10">
-          {/* Avatar estilizado */}
+          {/* Avatar estilizado (igual ao perfil) */}
           <section className="flex flex-col items-center">
             <div className="relative">
+              {/* Halo de luz (igual ao perfil) */}
               <div className="absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur opacity-75 animate-pulse"></div>
               <Image
                 src="/perfil.jpeg"
                 alt="Avatar"
                 width={140}
                 height={140}
-                className="relative w-32 h-32 rounded-full border-4 border-white shadow-2xl transition-transform duration-300 hover:scale-105"
+                className="relative w-32 h-32 rounded-full border-4 shadow-2xl transition-transform duration-300 hover:scale-105"
               />
             </div>
-            <p className="text-lg mt-2 text-white/90">Seja bem vinda!</p>
-            <h2 className="font-bold text-3xl bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-300">
-              Vick
+            <p className="text-3xl mt-4 text-white/90">Seja bem vinda!</p>
+            <h2 className="font-bold text-5xl bg-clip-text text-transparent p-1.5 bg-gradient-to-r from-orange-400 to-pink-300">
+              {nomeUsuario}
             </h2>
           </section>
 
@@ -86,7 +100,7 @@ export default function Home() {
         {/* Métricas estilizadas com ícones de vinil */}
         <section className="flex flex-col items-center lg:items-start">
           <h3 className="text-2xl font-bold mb-6 text-white text-center lg:text-left">
-            Alguns dados:
+            Principais dados:
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-6 w-full max-w-md">
             {/* Total de reproduções */}
