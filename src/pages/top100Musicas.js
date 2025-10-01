@@ -5,10 +5,10 @@ import { usePathname } from 'next/navigation';
 
 // Defina os links de navegação
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/musicas', label: 'Músicas' },
-  { href: '/albuns', label: 'Álbuns' },
-  { href: '/artistas', label: 'Artistas' },
+  
+  { href: "/top100Artistas", label: "Top 100 Artists" },
+    { href: "/top100Musicas", label: "Top 100 Musics" },
+    { href: "/top100Albuns", label: "Top 100 Albums" },
   // Adicione mais conforme necessário
 ];
 
@@ -32,8 +32,8 @@ export default function Home() {
           {links.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Link key={item.href} href={item.href}>
-                <a className="group flex flex-col items-center">
+              <Link key={item.href} href={item.href} className="group flex flex-col items-center">
+                
                   <div className="relative w-20 h-20 md:w-24 md:h-24">
                     <div
                       className={`absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur opacity-0 transition-opacity duration-300 ${
@@ -70,7 +70,7 @@ export default function Home() {
                   >
                     {item.label}
                   </span>
-                </a>
+                
               </Link>
             );
           })}
@@ -81,8 +81,8 @@ export default function Home() {
           <ul className="divide-y divide-white/10">
             {topMusicas.map((music, i) => (
               <li key={`${music.musica}-${music.album}-${music.artista}`} className="group">
-                <Link href={`/musica/${encodeURIComponent(music.musica)}-${encodeURIComponent(music.artista)}`}>
-                  <a className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
+                <Link href={`/artista/${encodeURIComponent(music.artista)}`} className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
+                  
                     <div className="absolute inset-0 -left-full group-hover:left-0 transition-left duration-500 ease-out bg-gradient-to-r from-transparent via-orange-500/10 to-transparent"></div>
                     <div className="relative flex justify-between items-center flex-wrap gap-y-1">
                       <div className="flex items-center gap-4 min-w-0">
@@ -101,7 +101,7 @@ export default function Home() {
                         <span>Time: {Math.floor(music.tempoOuvido)}h</span>
                       </div>
                     </div>
-                  </a>
+                
                 </Link>
               </li>
             ))}

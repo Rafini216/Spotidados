@@ -41,8 +41,8 @@ export default function Home() {
           {links.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Link key={item.href} href={item.href} legacyBehavior>
-                <a className="group flex flex-col items-center">
+              <Link key={item.href} href={item.href} className="group flex flex-col items-center">
+                
                   {/* Disco de vinil */}
                   <div className="relative w-20 h-20 md:w-24 md:h-24">
                     {/* Halo: sempre visível se ativo, senão só no hover */}
@@ -90,7 +90,7 @@ export default function Home() {
                   }`}>
                     {item.label}
                   </span>
-                </a>
+                
               </Link>
             );
           })}
@@ -101,8 +101,8 @@ export default function Home() {
           <ul className="divide-y divide-white/10">
             {topArtistas.map((artist, i) => (
               <li key={artist.artista} className="group">
-                <Link href={`/artista/${encodeURIComponent(artist.artista)}`} legacyBehavior>
-                  <a className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
+                <Link href={`/artista/${encodeURIComponent(artist.artista)}`} className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
+                  
                     {/* Faixa de luz horizontal ao passar o mouse */}
                     <div className="absolute inset-0 -left-full group-hover:left-0 transition-left duration-500 ease-out bg-gradient-to-r from-transparent via-orange-500/10 to-transparent"></div>
 
@@ -118,7 +118,7 @@ export default function Home() {
                         <span>Time: {Math.floor(artist.tempoOuvido)}h</span>
                       </div>
                     </div>
-                  </a>
+                  
                 </Link>
               </li>
             ))}
