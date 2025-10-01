@@ -35,8 +35,8 @@ export default function Pesquisa() {
           </h1>
         </div>
 
-        <div className="p-6 md:p-8">
-          <p className="text-gray-300 mb-8 text-center md:text-left text-sm md:text-base">
+        <div className="p-5 md:p-6">
+          <p className="text-gray-300 mb-6 text-center md:text-left text-sm md:text-base">
             Encontre seus artistas, músicas e álbuns favoritos
           </p>
 
