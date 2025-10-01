@@ -1,10 +1,20 @@
 import { top100Albums, } from "../utils/dataProcessing.js"
-import dadosHistory from "../data/history.json"
+
 import Link from "next/link";
 
 
+//loading da página 
+
+export async function getStaticProps(){
+  const topAlbums = top100Albums()
+  return {
+    props: { topAlbums },
+  };
+}
+
+//Content
 export default function Home() {
-    const topAlbums = top100Albums(dadosHistory, 100);
+    const topAlbums = top100Albums();
 
     return (
         <main className="p-6">
@@ -22,7 +32,9 @@ export default function Home() {
             <ul className="space-y-2">
                 {topAlbums.map((album, i) => (
                     <li key={`${album.album} - ${album.artista}`} className="flex justify-between border-b pb-1">
+                        <Link href={`/artista/${encodeURIComponent(album.artista)}`}>
                         <span>{i + 1}. {album.album} {album.artista}</span>
+                        </Link>
                         <span className="text-gray-500">Plays: {album.numeroRepetido} | Time: {Math.floor(album.tempoOuvido)}H </span>
                     </li>
                 ))}

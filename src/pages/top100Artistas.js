@@ -1,10 +1,21 @@
 import { top100Artistas } from "../utils/dataProcessing.js"
-import dadosHistory from "../data/history.json"
+
 import Link from "next/link";
 
 
+
+//loading da página 
+export async function getStaticProps(){
+  const topArtistas = top100Artistas()
+  return {
+    props: { topArtistas },
+  };
+}
+
+
+//Content
 export default function Home() {
-  const topArtistas = top100Artistas(dadosHistory, 100);
+  const topArtistas = top100Artistas();
 
   return (
     <main className="p-6">
@@ -22,7 +33,9 @@ export default function Home() {
       <ul className="space-y-2">
         {topArtistas.map((artist, i) => (
           <li key={artist.artista} className="flex justify-between border-b pb-1">
-            <span>{i + 1}. {artist.artista}</span>
+            <Link href={`/artista/${encodeURIComponent(artist.artista)}`}>
+              <span>{i + 1}. {artist.artista}</span>
+            </Link>
             <span className="text-gray-500">Plays: {artist.numeroRepetido} | Time: {Math.floor(artist.tempoOuvido)}H </span>
           </li>
         ))}
