@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
+  tempoTotal,
+  todosArtistas,
   contarTotalMusicas,
-  obterPrimeiraMusica,
-  encontrarArtistaMaisOuvido,
 } from "../utils/dataProcessing";
 
 export default function Home() {
@@ -13,8 +13,8 @@ export default function Home() {
 
   const [dados, setDados] = useState({
     total: 0,
-    primeira: "",
-    artista: "",
+    tempo: 0,
+    artistas: 0,
   });
 
   // 👇 Carrega nome salvo do localStorage
@@ -30,9 +30,9 @@ export default function Home() {
     async function carregarDados() {
       try {
         const total = await contarTotalMusicas();
-        const primeira = await obterPrimeiraMusica();
-        const artista = await encontrarArtistaMaisOuvido();
-        setDados({ total, primeira, artista });
+        const tempo = await Math.floor(tempoTotal()/1000/60);
+        const artistas = await todosArtistas().length;
+        setDados({ total, tempo, artistas });
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
       }
@@ -149,9 +149,9 @@ export default function Home() {
                 </div>
               </div>
               <div className="text-lg font-semibold text-white truncate mb-1">
-                {dados.primeira}
+                {dados.tempo}
               </div>
-              <div className="text-white/80 text-sm">Primeira música</div>
+              <div className="text-white/80 text-sm">Minutos ouvidos</div>
             </div>
 
             {/* Artista mais ouvido */}
@@ -180,9 +180,9 @@ export default function Home() {
                 </div>
               </div>
               <div className="text-lg font-semibold text-white truncate mb-1">
-                {dados.artista}
+                {dados.artistas}
               </div>
-              <div className="text-white/80 text-sm">Artista mais ouvido</div>
+              <div className="text-white/80 text-sm">Artistas ouvidos</div>
             </div>
           </div>
         </section>

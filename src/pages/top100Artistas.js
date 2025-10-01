@@ -1,11 +1,22 @@
-// src/app/top100Artistas/page.js
-import { top100Artistas } from "../utils/dataProcessing.js";
-import dadosHistory from "../data/history.json";
+import { top100Artistas } from "../utils/dataProcessing.js"
+
 import Link from "next/link";
 import { usePathname } from 'next/navigation'; 
 
-export default function Top100Artistas() {
-  const topArtistas = top100Artistas(dadosHistory, 100);
+
+
+//loading da página 
+export async function getStaticProps(){
+  const topArtistas = top100Artistas()
+  return {
+    props: { topArtistas },
+  };
+}
+
+
+//Content
+export default function Home() {
+  const topArtistas = top100Artistas();
   const pathname = usePathname(); 
 
   const links = [

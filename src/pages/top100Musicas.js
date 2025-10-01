@@ -1,22 +1,24 @@
-// src/app/top100Musicas/page.js
 import { top100Musicas } from "../utils/dataProcessing.js";
 import dadosHistory from "../data/history.json";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 
-export default function Top100Musicas() {
-  const topMusicas = top100Musicas(dadosHistory, 100); // Garanta que está passando o limite
-  const pathname = usePathname();
+// Defina os links de navegação
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/musicas', label: 'Músicas' },
+  { href: '/albuns', label: 'Álbuns' },
+  { href: '/artistas', label: 'Artistas' },
+  // Adicione mais conforme necessário
+];
 
-  const links = [
-    { href: "/top100Artistas", label: "Top 100 Artists" },
-    { href: "/top100Musicas", label: "Top 100 Musics" },
-    { href: "/top100Albuns", label: "Top 100 Albums" },
-  ];
+export default function Home() {
+  const pathname = usePathname(); // ✅ agora está definido
+  const topMusicas = top100Musicas(dadosHistory);
 
   return (
     <div className="min-h-screen bg-gradient-to-br to-black text-white p-4">
-      {/* Animação de rotação */}
+      {/* Animação global */}
       <style jsx global>{`
         @keyframes vinylSpin {
           from { transform: rotate(0deg); }
@@ -30,24 +32,24 @@ export default function Top100Musicas() {
           {links.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Link key={item.href} href={item.href} legacyBehavior>
+              <Link key={item.href} href={item.href}>
                 <a className="group flex flex-col items-center">
                   <div className="relative w-20 h-20 md:w-24 md:h-24">
-                    {/* Halo ativo ou hover */}
-                    <div className={`absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur transition-opacity duration-300 ${
-                      isActive ? 'opacity-70' : 'opacity-0 group-hover:opacity-60'
-                    }`}></div>
+                    <div
+                      className={`absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur opacity-0 transition-opacity duration-300 ${
+                        isActive ? 'opacity-70' : 'group-hover:opacity-60'
+                      }`}
+                    ></div>
 
-                    {/* Disco girando */}
                     <div className="w-full h-full rounded-full bg-black relative overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow">
                       <div
                         className="absolute inset-0"
                         style={{
-                          animation: "vinylSpin 8s linear infinite",
-                          transformOrigin: "center",
+                          animation: 'vinylSpin 8s linear infinite',
+                          transformOrigin: 'center',
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.animationPlayState = "paused"}
-                        onMouseLeave={(e) => e.currentTarget.style.animationPlayState = "running"}
+                        onMouseEnter={(e) => (e.currentTarget.style.animationPlayState = 'paused')}
+                        onMouseLeave={(e) => (e.currentTarget.style.animationPlayState = 'running')}
                       >
                         <div className="absolute top-2 left-3 w-3 h-3 rounded-full bg-white/30"></div>
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -61,11 +63,11 @@ export default function Top100Musicas() {
                     </div>
                   </div>
 
-                  <span className={`mt-3 text-center font-medium text-sm md:text-base transition-colors ${
-                    isActive 
-                      ? 'text-orange-200' 
-                      : 'text-orange-400 group-hover:text-orange-200'
-                  }`}>
+                  <span
+                    className={`mt-3 text-center font-medium text-sm md:text-base transition-colors ${
+                      isActive ? 'text-orange-200' : 'text-orange-400 group-hover:text-orange-200'
+                    }`}
+                  >
                     {item.label}
                   </span>
                 </a>
@@ -74,19 +76,14 @@ export default function Top100Musicas() {
           })}
         </div>
 
-        {/* Lista de músicas */}
+        {/* Lista de músicas — APENAS UMA VEZ */}
         <div className="bg-black/30 backdrop-blur-lg rounded-2xl border border-orange-500/20 overflow-hidden">
           <ul className="divide-y divide-white/10">
             {topMusicas.map((music, i) => (
               <li key={`${music.musica}-${music.album}-${music.artista}`} className="group">
-                <Link
-                  href={`/musica/${encodeURIComponent(music.musica)}-${encodeURIComponent(music.artista)}`}
-                  legacyBehavior
-                >
+                <Link href={`/musica/${encodeURIComponent(music.musica)}-${encodeURIComponent(music.artista)}`}>
                   <a className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
-                    {/* Faixa de luz horizontal */}
                     <div className="absolute inset-0 -left-full group-hover:left-0 transition-left duration-500 ease-out bg-gradient-to-r from-transparent via-orange-500/10 to-transparent"></div>
-
                     <div className="relative flex justify-between items-center flex-wrap gap-y-1">
                       <div className="flex items-center gap-4 min-w-0">
                         <span className="text-orange-400 font-bold w-8">#{i + 1}</span>
