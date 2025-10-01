@@ -60,26 +60,38 @@ export function encontrarArtistaMaisOuvido() {
 // top 100 artistas
 
 
-export function top100Artistas() {
+export function top100Artistas(inicio = null, fim = null) {
   if (!dadosHistory || dadosHistory.length === 0) {
     return [];
   }
-  
+
 
   const contagemArtistas = dadosHistory.reduce((acc, data) => {
     const artista = data.master_metadata_album_artist_name
     const key = artista;
     if (!artista) return acc
+
+    const dataTs = new Date(data.ts)
+    if (inicio && fim && (dataTs < inicio || dataTs > fim)) {
+
+      return acc
+    }
     if (!acc[key])
+
       acc[key] = {
         artista: artista,
         numeroRepetido: 0,
         tempoOuvido: 0,
-        datas: []
+
+
       }
+
+
     acc[key].numeroRepetido++
+
     acc[key].tempoOuvido += data.ms_played / 1000 / 60 / 60
-    acc[key].datas.push(data.ts)
+
+
 
     return acc
   }, {})
@@ -95,16 +107,23 @@ export function top100Artistas() {
 
 // top 100 musicas
 
-export function top100Musicas() {
+export function top100Musicas(inicio = null, fim = null) {
   if (!dadosHistory || dadosHistory.length === 0) {
     return [];
   }
 
 
   const contagemMusicas = dadosHistory.reduce((acc, data) => {
+    const dataTs = new Date(data.ts)
+    if (inicio && fim && (dataTs < inicio || dataTs > fim)) {
+
+      return acc
+    }
+
     const musica = data.master_metadata_track_name
     const album = data.master_metadata_album_album_name
     const artista = data.master_metadata_album_artist_name;
+
 
     if (musica && album && artista) {
 
@@ -116,12 +135,10 @@ export function top100Musicas() {
           musica: musica,
           numeroRepetido: 0,
           tempoOuvido: 0,
-          datas: []
         }
       }
       acc[key].numeroRepetido++
       acc[key].tempoOuvido += data.ms_played / 1000 / 60
-      acc[key].datas.push(data.ts)
 
 
 
@@ -140,7 +157,7 @@ export function top100Musicas() {
 
 // top 100 albums
 
-export function top100Albums() {
+export function top100Albums(inicio=null, fim=null) {
   if (!dadosHistory || dadosHistory.length === 0) {
     return [];
   }
@@ -150,6 +167,11 @@ export function top100Albums() {
     const album = data.master_metadata_album_album_name
     const artista = data.master_metadata_album_artist_name;
 
+    const dataTs = new Date(data.ts)
+    if (inicio && fim && (dataTs < inicio || dataTs > fim)) {
+
+      return acc
+    }
 
     if (album && artista) {
 
@@ -160,12 +182,10 @@ export function top100Albums() {
           artista: artista,
           numeroRepetido: 0,
           tempoOuvido: 0,
-          datas: []
         }
 
       acc[key].numeroRepetido++
       acc[key].tempoOuvido += data.ms_played / 1000 / 60
-      acc[key].datas.push(data.ts)
 
     }
     return acc
@@ -259,8 +279,8 @@ export function musicasDiferentes(nome) {
       }
     }
 
-})
-return musicaSet.size
+  })
+  return musicaSet.size
 }
 
 //tempo total ouvido
@@ -290,4 +310,30 @@ export function percentagemArtista(nome) {
   const artista = tempoERepeatsArtista(nome)
   const total = tempoTotal()
   return (artista.tempo / total) * 100
+}
+
+
+export function filtrarDatas(periodo) {
+  const fim = new Date("2024-1-18")
+  if (periodo === "all") {
+    return { inicio: null, fim: null }
+  }
+
+  if (periodo === "1month") {
+    const inicio = new Date("2024-1-18")
+    inicio.setMonth(fim.getMonth() - 1)
+    return { inicio, fim }
+  }
+  if (periodo === "6months") {
+    const inicio = new Date("2024-1-18")
+    inicio.setMonth(fim.getMonth() - 6)
+    return { inicio, fim }
+  }
+  if (periodo === "1year") {
+    const inicio = new Date("2024-1-18")
+    inicio.setFullYear(fim.getFullYear() - 1)
+    return { inicio, fim }
+  }
+
+
 }

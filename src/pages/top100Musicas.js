@@ -1,7 +1,8 @@
-import { top100Musicas } from "../utils/dataProcessing.js";
+import { filtrarDatas, top100Musicas } from "../utils/dataProcessing.js";
 import dadosHistory from "../data/history.json";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { useState, useMemo } from "react";
 
 // Defina os links de navegação
 const links = [
@@ -14,7 +15,14 @@ const links = [
 
 export default function Home() {
   const pathname = usePathname(); // ✅ agora está definido
-  const topMusicas = top100Musicas(dadosHistory);
+
+
+  const [periodo, setPeriodo] = useState("all");
+
+  const lista = useMemo(() => {
+    const { inicio, fim } = filtrarDatas(periodo);
+    return top100Musicas(inicio, fim);
+  }, [periodo, dadosHistory]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br to-black text-white p-4">
@@ -75,11 +83,38 @@ export default function Home() {
             );
           })}
         </div>
+          {/* Filtros */}
+        <div className="flex gap-4 mb-6">
+          <button
+            onClick={() => setPeriodo("all")}
+            className={`px-3 py-1 rounded ${periodo === "all" ? "bg-orange-500" : "bg-gray-700"}`}
+          >
+            All Time
+          </button>
+          <button
+            onClick={() => setPeriodo("1year")}
+            className={`px-3 py-1 rounded ${periodo === "1year" ? "bg-orange-500" : "bg-gray-700"}`}
+          >
+            Last Year
+          </button>
+          <button
+            onClick={() => setPeriodo("6months")}
+            className={`px-3 py-1 rounded ${periodo === "6months" ? "bg-orange-500" : "bg-gray-700"}`}
+          >
+            Last 6 Months
+          </button>
+          <button
+            onClick={() => setPeriodo("1month")}
+            className={`px-3 py-1 rounded ${periodo === "1month" ? "bg-orange-500" : "bg-gray-700"}`}
+          >
+            Last Month
+          </button>
+        </div>
 
         {/* Lista de músicas — APENAS UMA VEZ */}
         <div className="bg-black/30 backdrop-blur-lg rounded-2xl border border-orange-500/20 overflow-hidden">
           <ul className="divide-y divide-white/10">
-            {topMusicas.map((music, i) => (
+            {lista.map((music, i) => (
               <li key={`${music.musica}-${music.album}-${music.artista}`} className="group">
                 <Link href={`/artista/${encodeURIComponent(music.artista)}`} className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
                   
