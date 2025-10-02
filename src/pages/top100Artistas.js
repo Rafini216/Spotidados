@@ -1,12 +1,8 @@
-import { filtrarDatas, top100Artistas } from "../utils/dataProcessing.js"
+import { filtrarDatas, top100Artistas } from "../utils/dataProcessing.js";
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
-import dadosHistory from "../data/history.json"
-
-
-
-
+import { usePathname } from "next/navigation";
+import dadosHistory from "../data/history.json";
 
 //Content
 export default function Home() {
@@ -29,8 +25,12 @@ export default function Home() {
       {/* Animação de rotação garantida */}
       <style jsx global>{`
         @keyframes vinylSpin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
         }
       `}</style>
 
@@ -40,13 +40,21 @@ export default function Home() {
           {links.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Link key={item.href} href={item.href} className="group flex flex-col items-center">
-
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group flex flex-col items-center"
+              >
                 {/* Disco de vinil */}
                 <div className="relative w-20 h-20 md:w-24 md:h-24">
                   {/* Halo: sempre visível se ativo, senão só no hover */}
-                  <div className={`absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur transition-opacity duration-300 ${isActive ? 'opacity-70' : 'opacity-0 group-hover:opacity-60'
-                    }`}></div>
+                  <div
+                    className={`absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur transition-opacity duration-300 ${
+                      isActive
+                        ? "opacity-70"
+                        : "opacity-0 group-hover:opacity-60"
+                    }`}
+                  ></div>
 
                   {/* Disco girando */}
                   <div className="w-full h-full rounded-full bg-black relative overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow">
@@ -69,7 +77,9 @@ export default function Home() {
                       {/* Rótulo central */}
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-orange-700 flex items-center justify-center">
-                          <span className="text-white text-[10px] font-bold">B4F</span>
+                          <span className="text-white text-[10px] font-bold">
+                            B4F
+                          </span>
                         </div>
                       </div>
 
@@ -81,43 +91,54 @@ export default function Home() {
                 </div>
 
                 {/* Texto abaixo */}
-                <span className={`mt-3 text-center font-medium text-sm md:text-base transition-colors ${isActive
-                    ? 'text-orange-200'
-                    : 'text-orange-400 group-hover:text-orange-200'
-                  }`}>
+                <span
+                  className={`mt-3 text-center font-medium text-sm md:text-base transition-colors ${
+                    isActive
+                      ? "text-orange-200"
+                      : "text-orange-400 group-hover:text-orange-200"
+                  }`}
+                >
                   {item.label}
                 </span>
-
               </Link>
             );
           })}
         </div>
-        {/* Filtros */}
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => setPeriodo("all")}
-            className={`px-3 py-1 rounded ${periodo === "all" ? "bg-orange-500" : "bg-gray-700"}`}
-          >
-            All Time
-          </button>
-          <button
-            onClick={() => setPeriodo("1year")}
-            className={`px-3 py-1 rounded ${periodo === "1year" ? "bg-orange-500" : "bg-gray-700"}`}
-          >
-            Last Year
-          </button>
-          <button
-            onClick={() => setPeriodo("6months")}
-            className={`px-3 py-1 rounded ${periodo === "6months" ? "bg-orange-500" : "bg-gray-700"}`}
-          >
-            Last 6 Months
-          </button>
-          <button
-            onClick={() => setPeriodo("1month")}
-            className={`px-3 py-1 rounded ${periodo === "1month" ? "bg-orange-500" : "bg-gray-700"}`}
-          >
-            Last Month
-          </button>
+        {/* Filtros — estilizados para combinar com o tema */}
+        <div className="flex flex-wrap gap-3 mb-6 justify-center">
+          {[
+            { key: "all", label: "All Time" },
+            { key: "1year", label: "Last Year" },
+            { key: "6months", label: "Last 6 Months" },
+            { key: "1month", label: "Last Month" },
+          ].map((opt) => (
+            <span key={opt.key} className="group">
+              <button
+                onClick={() => setPeriodo(opt.key)}
+                className="relative px-4 py-2 rounded-full font-medium text-sm text-orange-300 transition-all duration-300 overflow-hidden"
+              >
+                {/* Halo de destaque (ativo ou hover) */}
+                <div
+                  className={`absolute -inset-1 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 blur opacity-0 transition-opacity ${
+                    periodo === opt.key
+                      ? "opacity-70"
+                      : "group-hover:opacity-60"
+                  }`}
+                ></div>
+
+                {/* Fundo do botão */}
+                <div
+                  className={`relative rounded-full backdrop-blur-sm border px-4 py-2 ${
+                    periodo === opt.key
+                      ? "bg-black/40 border-orange-500/50 text-white"
+                      : "bg-black/20 border-white/10"
+                  }`}
+                >
+                  {opt.label}
+                </div>
+              </button>
+            </span>
+          ))}
         </div>
 
         {/* Lista de artistas */}
@@ -125,14 +146,18 @@ export default function Home() {
           <ul className="divide-y divide-white/10">
             {lista.map((artist, i) => (
               <li key={artist.artista} className="group">
-                <Link href={`/artista/${encodeURIComponent(artist.artista)}`} className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
-
+                <Link
+                  href={`/artista/${encodeURIComponent(artist.artista)}`}
+                  className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5"
+                >
                   {/* Faixa de luz horizontal ao passar o mouse */}
                   <div className="absolute inset-0 -left-full group-hover:left-0 transition-left duration-500 ease-out bg-gradient-to-r from-transparent via-orange-500/10 to-transparent"></div>
 
                   <div className="relative flex justify-between items-center">
                     <div className="flex items-center gap-4">
-                      <span className="text-orange-400 font-bold w-8">#{i + 1}</span>
+                      <span className="text-orange-400 font-bold w-8">
+                        #{i + 1}
+                      </span>
                       <span className="font-medium text-lg group-hover:text-orange-300 transition-colors">
                         {artist.artista}
                       </span>
@@ -143,7 +168,6 @@ export default function Home() {
                       <span>Time: {Math.floor(artist.tempoOuvido)}m</span>
                     </div>
                   </div>
-
                 </Link>
               </li>
             ))}
