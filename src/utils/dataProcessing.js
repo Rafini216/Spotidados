@@ -68,6 +68,7 @@ export function top100Artistas(inicio = null, fim = null) {
 
   const contagemArtistas = dadosHistory.reduce((acc, data) => {
     const artista = data.master_metadata_album_artist_name
+    const ultimaMusica = data.master_metadata_track_name
     const key = artista;
     if (!artista) return acc
 
@@ -82,23 +83,23 @@ export function top100Artistas(inicio = null, fim = null) {
         artista: artista,
         numeroRepetido: 0,
         tempoOuvido: 0,
-
+        ultimaMusicaOuvida: ultimaMusica
 
       }
 
 
     acc[key].numeroRepetido++
 
-    acc[key].tempoOuvido += data.ms_played / 1000 / 60 / 60
+    acc[key].tempoOuvido += data.ms_played / 1000 / 60
 
-
+    acc[key].ultimaMusicaOuvida= !acc[key].ultimaMusicaOuvida || new Date(data.ts) > new Date(acc[key].ultimaMusicaOuvida) ? ultimaMusica : acc[key].ultimaMusicaOuvida
 
     return acc
   }, {})
 
   return Object.values(contagemArtistas)
     .sort((a, b) => b.numeroRepetido - a.numeroRepetido)
-    .slice(0, 100);
+    .slice(0, 100)
 }
 
 
@@ -122,7 +123,7 @@ export function top100Musicas(inicio = null, fim = null) {
 
     const musica = data.master_metadata_track_name
     const album = data.master_metadata_album_album_name
-    const artista = data.master_metadata_album_artist_name;
+    const artista = data.master_metadata_album_artist_name
 
 
     if (musica && album && artista) {
@@ -135,10 +136,11 @@ export function top100Musicas(inicio = null, fim = null) {
           musica: musica,
           numeroRepetido: 0,
           tempoOuvido: 0,
+          
         }
       }
       acc[key].numeroRepetido++
-      acc[key].tempoOuvido += data.ms_played / 1000 / 60
+      acc[key].tempoOuvido += data.ms_played / 1000 / 60 
 
 
 
@@ -164,6 +166,7 @@ export function top100Albums(inicio=null, fim=null) {
 
 
   const contagemAlbums = dadosHistory.reduce((acc, data) => {
+    const ultimaMusica = data.master_metadata_track_name
     const album = data.master_metadata_album_album_name
     const artista = data.master_metadata_album_artist_name;
 
@@ -182,11 +185,12 @@ export function top100Albums(inicio=null, fim=null) {
           artista: artista,
           numeroRepetido: 0,
           tempoOuvido: 0,
+          ultimaMusicaOuvida: ultimaMusica
         }
 
       acc[key].numeroRepetido++
       acc[key].tempoOuvido += data.ms_played / 1000 / 60
-
+      acc[key].ultimaMusicaOuvida= !acc[key].ultimaMusicaOuvida || new Date(data.ts) > new Date(acc[key].ultimaMusicaOuvida) ? ultimaMusica : acc[key].ultimaMusicaOuvida 
     }
     return acc
   }, {})
@@ -228,12 +232,12 @@ export function PagArtista(nome) {
           musica: musica,
           numeroRepetido: 0,
           tempoOuvido: 0,
-          datas: []
+
         }
       }
       acc[key].numeroRepetido++
       acc[key].tempoOuvido += data.ms_played / 1000 / 60
-      acc[key].datas.push(data.ts)
+
 
 
 

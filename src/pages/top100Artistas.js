@@ -138,8 +138,9 @@ export default function Home() {
                       </span>
                     </div>
                     <div className="text-orange-200 text-sm flex gap-3">
+                      <span>Last song played: {artist.ultimaMusicaOuvida}</span>
                       <span>Plays: {artist.numeroRepetido}</span>
-                      <span>Time: {Math.floor(artist.tempoOuvido)}h</span>
+                      <span>Time: {Math.floor(artist.tempoOuvido)}m</span>
                     </div>
                   </div>
 

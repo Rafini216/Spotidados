@@ -132,8 +132,9 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="text-orange-200 text-sm flex gap-3 whitespace-nowrap">
+                        
                         <span>Plays: {music.numeroRepetido}</span>
-                        <span>Time: {Math.floor(music.tempoOuvido)}h</span>
+                        <span>Time: {Math.floor(music.tempoOuvido)}m</span>
                       </div>
                     </div>
                 
