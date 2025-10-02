@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import {top100Artistas, musicasDiferentes, tempoERepeatsArtista, percentagemArtista, todosArtistas, PagArtista } from "../../utils/dataProcessing";
+import { musicasDiferentes, tempoERepeatsArtista, percentagemArtista, PagArtista } from "../../utils/dataProcessing";
 
 
 
@@ -8,21 +8,6 @@ import {top100Artistas, musicasDiferentes, tempoERepeatsArtista, percentagemArti
 //Construir as páginas de todos os artistas
 
 
-export async function getStaticPaths() {
-  const artistas = top100Artistas();
-  const paths = artistas.map(page => ({ params: { name: page.artista } }));
-
-  return { paths, fallback: "blocking" };
-}
-
-
-export async function getStaticProps() {
-  const artistas = PagArtista()
-
-  return {
-    props: { artistas },
-  };
-}
 
 //Routing da página de cada artista
 

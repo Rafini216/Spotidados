@@ -5,13 +5,7 @@ import { usePathname } from 'next/navigation';
 import dadosHistory from "../data/history.json"
 
 
-//loading da página 
-export async function getStaticProps() {
-  const topArtistas = top100Artistas()
-  return {
-    props: { topArtistas },
-  };
-}
+
 
 
 //Content
