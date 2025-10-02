@@ -13,14 +13,15 @@ const links = [
 ];
 
 export default function Home() {
-  const pathname = usePathname(); // ✅ agora está definido
+  const pathname = usePathname();
 
   const [periodo, setPeriodo] = useState("all");
 
+  // ✅ Corrigido: useMemo só depende de 'periodo'
   const lista = useMemo(() => {
     const { inicio, fim } = filtrarDatas(periodo);
     return top100Musicas(inicio, fim);
-  }, [periodo, dadosHistory]);
+  }, [periodo]); // ← dadosHistory removido (não usado diretamente no corpo)
 
   return (
     <div className="min-h-screen bg-gradient-to-br to-black text-white p-4">
@@ -36,7 +37,7 @@ export default function Home() {
         }
       `}</style>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Cabeçalho com vinis */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-10 mt-8">
           {links.map((item) => {
@@ -82,11 +83,12 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* Label estilizada */}
                 <span
-                  className={`mt-3 text-center font-medium text-sm md:text-base transition-colors ${
+                  className={`mt-4 px-3 py-1 rounded-full text-center font-medium text-xs md:text-sm transition-all duration-300 backdrop-blur-sm border ${
                     isActive
-                      ? "text-orange-200"
-                      : "text-orange-400 group-hover:text-orange-200"
+                      ? "text-orange-200 bg-black/40 border-orange-500/30"
+                      : "text-orange-400/90 bg-black/30 border-white/10 group-hover:text-orange-200 group-hover:bg-black/40"
                   }`}
                 >
                   {item.label}
@@ -95,6 +97,7 @@ export default function Home() {
             );
           })}
         </div>
+
         {/* Filtros — estilizados para combinar com o tema */}
         <div className="flex flex-wrap gap-3 mb-6 justify-center">
           {[
@@ -132,7 +135,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Lista de músicas — APENAS UMA VEZ */}
+        {/* Lista de músicas */}
         <div className="bg-black/30 backdrop-blur-lg rounded-2xl border border-orange-500/20 overflow-hidden">
           <ul className="divide-y divide-white/10">
             {lista.map((music, i) => (

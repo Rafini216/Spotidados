@@ -34,32 +34,50 @@ export default function Home({ tempo, artistas, musicas }) {
   }, []);
 
   const dados = [
-    { valor: musicas, label: "Total de reproduções", cor: "from-green-500 to-emerald-500" },
-    { valor: tempo, label: "Minutos ouvidos", cor: "from-blue-500 to-cyan-500" },
-    { valor: artistas, label: "Artistas ouvidos", cor: "from-amber-400 to-orange-500" },
+    {
+      valor: musicas,
+      label: "Total de reproduções",
+      cor: "from-green-500 to-emerald-500",
+    },
+    {
+      valor: tempo,
+      label: "Minutos ouvidos",
+      cor: "from-blue-500 to-cyan-500",
+    },
+    {
+      valor: artistas,
+      label: "Artistas ouvidos",
+      cor: "from-amber-400 to-orange-500",
+    },
   ];
 
   const renderIcone = (index) => {
     switch (index) {
       case 0:
+        // Ícone de play (reproduções)
         return (
-          <svg className="w-6 h-6" viewBox="0 0 100 100">
-            <path d="M20,50 A30,30 0 1,1 80,50" fill="none" stroke="white" strokeWidth="2"/>
-            <path d="M75,55 L85,50 L75,45" fill="white" />
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="white">
+            <path d="M8 5v14l11-7z" />
           </svg>
         );
       case 1:
         // Ícone de relógio
         return (
-          <svg className="w-4 h-4" fill="none" stroke="white" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12,6 12,12 16,14"/>
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="white"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12,6 12,12 16,14" />
           </svg>
         );
       case 2:
+        // Ícone de artista (estrela)
         return (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="gold">
-            <path d="M5,13L7,7L12,10L17,7L19,13L12,15M12,3L9,9L3,10L6,14L4,20L12,18L20,20L18,14L21,10L15,9L12,3Z" fill="currentColor" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5,13L7,7L12,10L17,7L19,13L12,15M12,3L9,9L3,10L6,14L4,20L12,18L20,20L18,14L21,10L15,9L12,3Z" />
           </svg>
         );
       default:
@@ -135,7 +153,9 @@ export default function Home({ tempo, artistas, musicas }) {
                     <div className="relative w-12 h-12">
                       <div className="w-full h-full rounded-full bg-black"></div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className={`w-5 h-5 rounded-full bg-gradient-to-r ${item.cor} flex items-center justify-center`}>
+                        <div
+                          className={`w-5 h-5 rounded-full bg-gradient-to-r ${item.cor} flex items-center justify-center`}
+                        >
                           {renderIcone(index)}
                         </div>
                       </div>
@@ -143,7 +163,7 @@ export default function Home({ tempo, artistas, musicas }) {
                       <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-white/30"></div>
                     </div>
                   </div>
-                  
+
                   <div className="text-3xl font-bold text-white mb-1">
                     {item.valor}
                   </div>
@@ -158,8 +178,12 @@ export default function Home({ tempo, artistas, musicas }) {
       {/* Estilo da animação de rotação lenta */}
       <style jsx global>{`
         @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
         }
         .animate-spin-slow {
           animation: spin-slow 20s linear infinite;
