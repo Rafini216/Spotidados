@@ -25,13 +25,13 @@ export default function Perfil() {
         {/* Cabeçalho decorativo */}
         <div className="bg-gradient-to-r from-orange-500/20 to-pink-500/20 px-6 py-4 border-b border-orange-500/20">
           <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-300">
-            👤 Meu Perfil
+            👤 My Profile
           </h1>
         </div>
 
         <div className="p-6 md:p-8">
           <p className="text-gray-300 mb-8 text-center md:text-left">
-            Gerencie suas informações pessoais e preferências musicais
+            Manage your personal info and music preferences
           </p>
 
           {/* Avatar + Nome */}
@@ -66,13 +66,13 @@ export default function Perfil() {
                       onClick={handleSalvar}
                       className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition shadow-md"
                     >
-                      Salvar
+                      Save
                     </button>
                     <button
                       onClick={handleCancelar}
                       className="px-4 py-1.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition"
                     >
-                      Cancelar
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export default function Perfil() {
                     }}
                     className="text-orange-400 hover:text-orange-300 text-sm font-medium transition flex items-center gap-1"
                   >
-                    ✏️ Editar nome
+                    ✏️ Edit name
                   </button>
                 </>
               )}
@@ -103,13 +103,13 @@ export default function Perfil() {
             </div>
             <div className="bg-pink-500/8 p-4 rounded-xl border border-white/10">
               <h3 className="font-semibold text-orange-400 mb-1">
-                🎵 Artista favorito
+                🎵 Favorite artist
               </h3>
               <p className="text-gray-300">Kendrick Lamar</p>
             </div>
             <div className="bg-blue-500/8 p-4 rounded-xl border border-white/10">
               <h3 className="font-semibold text-orange-400 mb-1">
-                🎧 Total de músicas ouvidas
+                🎧 Total songs listened
               </h3>
               <p className="text-gray-300">12.487</p>
             </div>

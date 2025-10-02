@@ -36,17 +36,17 @@ export default function Home({ tempo, artistas, musicas }) {
   const dados = [
     {
       valor: musicas,
-      label: "Total de reproduções",
+      label: "Total plays",
       cor: "from-green-500 to-emerald-500",
     },
     {
       valor: tempo,
-      label: "Minutos ouvidos",
+      label: "Minutes listened",
       cor: "from-blue-500 to-cyan-500",
     },
     {
       valor: artistas,
-      label: "Artistas ouvidos",
+      label: "Artists listened",
       cor: "from-amber-400 to-orange-500",
     },
   ];
@@ -101,10 +101,13 @@ export default function Home({ tempo, artistas, musicas }) {
                 className="relative w-32 h-32 rounded-full border-4 shadow-2xl"
               />
             </div>
-            <p className="text-3xl mt-4 text-white/90">Seja bem vinda!</p>
+            <p className="text-5xl font-bold mt-4 text-white/90">Welcome!</p>
             <h2 className="font-bold text-5xl bg-clip-text text-transparent p-1.5 bg-gradient-to-r from-orange-400 to-pink-300">
               {nomeUsuario}
             </h2>
+            <p className="mt-2 text-lg italic text-white/80 text-center">
+              Discover your music habits in detail
+            </p>
           </section>
 
           {/* Vinil estilizado — agora com animação de rotação */}
@@ -130,8 +133,8 @@ export default function Home({ tempo, artistas, musicas }) {
 
         {/* Métricas com efeito em cascata */}
         <section className="flex flex-col items-center lg:items-start">
-          <h3 className="text-2xl font-bold mb-6 text-white text-center lg:text-left">
-            Principais dados:
+          <h3 className="text-3xl font-bold mb-6 text-white text-center lg:text-left">
+            Your stats:
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-6 w-full max-w-md">
             {dados.map((item, index) => (

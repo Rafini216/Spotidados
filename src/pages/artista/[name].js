@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 
-import { musicasDiferentes, tempoERepeatsArtista, percentagemArtista, PagArtista } from "../../utils/dataProcessing";
-
-
-
+import {
+  musicasDiferentes,
+  tempoERepeatsArtista,
+  percentagemArtista,
+  PagArtista,
+} from "../../utils/dataProcessing";
 
 //Construir as páginas de todos os artistas
-
-
 
 //Routing da página de cada artista
 
@@ -17,12 +17,12 @@ export default function ArtistPage() {
 
   if (!name) return <p>Loading...</p>;
   const top20 = PagArtista(name);
-  const percentagem = percentagemArtista(name)
-  const tempo = tempoERepeatsArtista(name)
-  const vezes = musicasDiferentes(name)
+  const percentagem = percentagemArtista(name);
+  const tempo = tempoERepeatsArtista(name);
+  const vezes = musicasDiferentes(name);
 
   return (
-      <div className="min-h-screen bg-gradient-to-br to-black text-white p-8">
+    <div className="min-h-screen bg-gradient-to-br to-black text-white p-8">
       <div className="max-w-4xl mx-auto">
         {/* Título */}
         <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center md:text-left">
@@ -35,21 +35,21 @@ export default function ArtistPage() {
             <div className="text-orange-400 font-bold">
               {percentagem.toFixed(2)}%
             </div>
-            <div className="text-gray-300 text-sm">das minhas plays</div>
+            <div className="text-gray-300 text-sm">of my plays</div>
           </div>
           <div className="text-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
             <div className="text-orange-400 font-bold">{tempo.repeats}</div>
-            <div className="text-gray-300 text-sm">vezes ouvido</div>
+            <div className="text-gray-300 text-sm">times played</div>
           </div>
           <div className="text-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
             <div className="text-orange-400 font-bold">{vezes}</div>
-            <div className="text-gray-300 text-sm">músicas diferentes</div>
+            <div className="text-gray-300 text-sm">different songs</div>
           </div>
           <div className="text-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
             <div className="text-orange-400 font-bold">
               {Math.floor(tempo.tempo / 1000 / 60)}
             </div>
-            <div className="text-gray-300 text-sm">minutos ouvidos</div>
+            <div className="text-gray-300 text-sm">minutes listened</div>
           </div>
         </div>
 
@@ -86,7 +86,7 @@ export default function ArtistPage() {
             ))}
           </ul>
         </div>
-        </div>
-        </div>
+      </div>
+    </div>
   );
 }

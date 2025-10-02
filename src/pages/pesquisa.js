@@ -11,9 +11,9 @@ export default function Pesquisa() {
   const handleBuscar = () => {
     if (termo.trim()) {
       setResultados([
-        { id: 1, tipo: "Artista", nome: "Kendrick Lamar", imagem: "/kd.jpeg" },
-        { id: 2, tipo: "Música", nome: "HUMBLE.", artista: "Kendrick Lamar" },
-        { id: 3, tipo: "Álbum", nome: "DAMN.", artista: "Kendrick Lamar" },
+        { id: 1, tipo: "Artist", nome: "Kendrick Lamar", imagem: "/kd.jpeg" },
+        { id: 2, tipo: "Music", nome: "HUMBLE.", artista: "Kendrick Lamar" },
+        { id: 3, tipo: "Album", nome: "DAMN.", artista: "Kendrick Lamar" },
       ]);
     } else {
       setResultados([]);
@@ -31,13 +31,13 @@ export default function Pesquisa() {
         {/* Cabeçalho decorativo */}
         <div className="bg-gradient-to-r from-orange-500/20 to-pink-500/20 px-6 py-3 border-b border-orange-500/20">
           <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-300">
-            🔍 Pesquisar
+            🔍 Search
           </h1>
         </div>
 
         <div className="p-5 md:p-6">
           <p className="text-gray-300 mb-6 text-center md:text-left text-sm md:text-base">
-            Encontre seus artistas, músicas e álbuns favoritos
+            Find your favorite artists, songs, and albums
           </p>
 
           {/* Ícone temático de música/pesquisa */}
@@ -64,7 +64,7 @@ export default function Pesquisa() {
                 type="text"
                 value={termo}
                 onChange={(e) => setTermo(e.target.value)}
-                placeholder="Artista, música ou álbum..."
+                placeholder="Artist, music or album..."
                 className="w-full px-4 py-2 bg-white/10 border border-orange-500/40 rounded-lg text-white text-base placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-orange-500/60 transition pl-10"
                 onKeyPress={(e) => e.key === 'Enter' && handleBuscar()}
               />
@@ -87,14 +87,14 @@ export default function Pesquisa() {
                   : "bg-gray-700 cursor-not-allowed text-gray-400"
               }`}
             >
-              Buscar
+              Search
             </button>
           </div>
 
           {/* Resultados */}
           {resultados.length > 0 ? (
             <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
-              <h3 className="text-sm font-semibold text-orange-400 mb-2">Resultados:</h3>
+              <h3 className="text-sm font-semibold text-orange-400 mb-2">Results:</h3>
               {resultados.map((item) => (
                 <div
                   key={item.id}
@@ -122,11 +122,11 @@ export default function Pesquisa() {
             </div>
           ) : termo ? (
             <div className="text-center py-6 text-gray-400 text-sm">
-              Nenhum resultado para &quot;{termo}&quot;
+              No results for &quot;{termo}&quot;
             </div>
           ) : (
             <div className="text-center py-6 text-gray-500 italic text-sm">
-              Digite algo para pesquisar...
+              Search for anything...
             </div>
           )}
         </div>
