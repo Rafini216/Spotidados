@@ -1,4 +1,3 @@
-// src/app/page.js
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
@@ -54,7 +53,7 @@ export default function Home({ tempo, artistas, musicas }) {
   const renderIcone = (index) => {
     switch (index) {
       case 0:
-        // Ícone de play (reproduções)
+        // Ícone de play
         return (
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="white">
             <path d="M8 5v14l11-7z" />
@@ -74,7 +73,7 @@ export default function Home({ tempo, artistas, musicas }) {
           </svg>
         );
       case 2:
-        // Ícone de artista (estrela)
+        // Ícone de artista
         return (
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d="M5,13L7,7L12,10L17,7L19,13L12,15M12,3L9,9L3,10L6,14L4,20L12,18L20,20L18,14L21,10L15,9L12,3Z" />
@@ -110,7 +109,7 @@ export default function Home({ tempo, artistas, musicas }) {
             </p>
           </section>
 
-          {/* Vinil estilizado — agora com animação de rotação */}
+          {/* Vinil estilizado */}
           <section>
             <div className="relative w-48 h-48 flex items-center justify-center mt-8">
               <div className="absolute w-full h-full rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-800 shadow-2xl"></div>

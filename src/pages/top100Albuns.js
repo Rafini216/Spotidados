@@ -186,7 +186,7 @@ export default function Home() {
                 </li>
               )}
 
-              {/* Top 2 e Top 3 – destaque intermediário (maior que 4–5) */}
+              {/* Top 2 e Top 3 – destaque intermediário */}
               {lista.slice(1, 3).map((album, idx) => (
                 <li key={album.artista}>
                   <Link

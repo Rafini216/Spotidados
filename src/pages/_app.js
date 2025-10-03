@@ -1,4 +1,3 @@
-// pages/_app.js
 import "@/styles/globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
@@ -6,7 +5,7 @@ import Footer from "@/components/footer";
 export default function App({ Component, pageProps }) {
   return (
     <div className="min-h-screen flex flex-col relative">
-      {/* GRADIENTE DE FUNDO — atrás de tudo */}
+      {/* gradiente fundo */}
       <div
         className="fixed inset-0 z-0"
         style={{
@@ -17,15 +16,15 @@ export default function App({ Component, pageProps }) {
         <div className="absolute inset-0 bg-black/15"></div>
       </div>
 
-      {/* NAVBAR — acima do fundo */}
+      {/* navbar */}
       <Navbar />
 
-      {/* CONTEÚDO DA PÁGINA — acima de tudo */}
+      {/* conteúdo da página */}
       <main className="relative z-10 flex-grow">
         <Component {...pageProps} />
       </main>
 
-      {/* FOOTER — acima do fundo */}
+      {/* footer */}
       <Footer />
     </div>
   );

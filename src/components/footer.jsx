@@ -1,4 +1,3 @@
-// src/components/footer.js
 export default function Footer() {
   return (
     <footer className="bg-black/50 backdrop-blur-md text-white py-4 px-6 border-t-2 border-orange-500">

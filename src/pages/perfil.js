@@ -36,7 +36,7 @@ export default function Perfil() {
 
           {/* Avatar + Nome */}
           <div className="flex flex-col items-center mb-10">
-            {/* Avatar com efeito de halo (igual à home) */}
+            {/* Avatar com efeito de halo */}
             <div className="relative mb-6">
               <div className="absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur opacity-75 animate-pulse"></div>
               <div className="relative">
