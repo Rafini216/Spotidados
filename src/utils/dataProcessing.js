@@ -1,7 +1,9 @@
 import dadosHistory from "../data/history.json"
 
-
-
+//dar cache aos top 100 por causa da search bar
+let cachedArtistas = null;
+let cachedMusicas = null;
+let cachedAlbuns = null;
 
 
 export function contarTotalMusicas() {
@@ -342,16 +344,23 @@ export function filtrarDatas(periodo) {
 
 }
 
-
+function getCachedTop100() {
+  if (!cachedArtistas) cachedArtistas = top100Artistas();
+  if (!cachedMusicas) cachedMusicas = top100Musicas();
+  if (!cachedAlbuns) cachedAlbuns = top100Albums();
+  return {
+    artistas: cachedArtistas,
+    musicas: cachedMusicas,
+    albuns: cachedAlbuns
+  };
+}
 
 export function searchBar(query) {
 
   if (!query || typeof query !== "string") return [];
 
+const { artistas, musicas, albuns } = getCachedTop100();
 
-  const musicas = top100Musicas() || ""
-  const artistas = top100Artistas() || ""
-  const albuns = top100Albums() || ""
 
   const artistasFiltrados = artistas.filter(a =>
     a.artista && a.artista.toLowerCase().includes(query)
