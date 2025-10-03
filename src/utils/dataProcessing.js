@@ -348,20 +348,19 @@ export function searchBar(query) {
 
   if (!query || typeof query !== "string") return [];
 
-  const lowerQuery = query.toLowerCase();
 
   const musicas = top100Musicas() || ""
   const artistas = top100Artistas() || ""
   const albuns = top100Albums() || ""
 
   const artistasFiltrados = artistas.filter(a =>
-    a.artista && a.artista.toLowerCase().includes(lowerQuery)
+    a.artista && a.artista.toLowerCase().includes(query)
   );
   const musicasFiltradas = musicas.filter(m =>
-    m.musica && m.musica.toLowerCase().includes(lowerQuery)
+    m.musica && m.musica.toLowerCase().includes(query)
   );
   const albunsFiltrados = albuns.filter(al =>
-    al.album && al.album.toLowerCase().includes(lowerQuery)
+    al.album && al.album.toLowerCase().includes(query)
   );
   return {
     artistas: artistasFiltrados,
