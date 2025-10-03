@@ -19,7 +19,7 @@ export default function Home() {
   const lista = useMemo(() => {
     const { inicio, fim } = filtrarDatas(periodo);
     return top100Albums(inicio, fim);
-  }, [periodo]); // ← removido dadosHistory (não usado diretamente)
+  }, [periodo]);
 
   const pathname = usePathname();
 

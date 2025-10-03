@@ -8,11 +8,11 @@ import dadosHistory from "../data/history.json";
 export default function Home() {
   const [periodo, setPeriodo] = useState("all");
 
-  // ✅ Corrigido: useMemo só depende de 'periodo'
+  
   const lista = useMemo(() => {
     const { inicio, fim } = filtrarDatas(periodo);
     return top100Artistas(inicio, fim);
-  }, [periodo]); // ← dadosHistory removido (é estático e não usado diretamente)
+  }, [periodo]);
 
   const pathname = usePathname();
 
