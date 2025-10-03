@@ -48,11 +48,7 @@ export default function Pesquisa() {
 
 
                     <div>
-                        <div className="w-full max-w-md bg-gray-800 rounded-2xl shadow-lg p-6">
-                            <h1 className="text-2xl font-bold text-center mb-6">
-                                React Search Bar Example
-                            </h1>
-                        </div>
+                        
                         <TextField
                             className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
                             id="outlined-basic"
