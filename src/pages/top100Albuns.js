@@ -2,7 +2,7 @@ import { filtrarDatas, top100Albums } from "../utils/dataProcessing.js";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useMemo } from "react";
-import dadosHistory from "../data/history.json";
+
 
 // Defina seus links de navegação
 const links = [
@@ -15,14 +15,14 @@ const links = [
 export default function Home() {
   const [periodo, setPeriodo] = useState("all");
 
-  
+
   const lista = useMemo(() => {
     const { inicio, fim } = filtrarDatas(periodo);
     return top100Albums(inicio, fim);
   }, [periodo]); // ← removido dadosHistory (não usado diretamente)
 
   const pathname = usePathname();
- 
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br to-black text-white p-4">
@@ -51,9 +51,8 @@ export default function Home() {
                 {/* Disco de vinil */}
                 <div className="relative w-20 h-20 md:w-24 md:h-24">
                   <div
-                    className={`absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur opacity-0 transition-opacity duration-300 ${
-                      isActive ? "opacity-70" : "group-hover:opacity-60"
-                    }`}
+                    className={`absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur opacity-0 transition-opacity duration-300 ${isActive ? "opacity-70" : "group-hover:opacity-60"
+                      }`}
                   ></div>
 
                   <div className="w-full h-full rounded-full bg-black relative overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow">
@@ -86,11 +85,10 @@ export default function Home() {
 
                 {/*Label estilizada */}
                 <span
-                  className={`mt-4 px-3 py-1 rounded-full text-center font-medium text-xs md:text-sm transition-all duration-300 backdrop-blur-sm border ${
-                    isActive
+                  className={`mt-4 px-3 py-1 rounded-full text-center font-medium text-xs md:text-sm transition-all duration-300 backdrop-blur-sm border ${isActive
                       ? "text-orange-200 bg-black/40 border-orange-500/30"
                       : "text-orange-400/90 bg-black/30 border-white/10 group-hover:text-orange-200 group-hover:bg-black/40"
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </span>
@@ -110,26 +108,23 @@ export default function Home() {
             <span key={opt.key} className="group">
               <button
                 onClick={() => setPeriodo(opt.key)}
-                className={`relative px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 overflow-hidden ${
-                  periodo === opt.key ? "text-white" : "text-orange-300"
-                }`}
+                className={`relative px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 overflow-hidden ${periodo === opt.key ? "text-white" : "text-orange-300"
+                  }`}
               >
                 {/* Halo de destaque (ativo ou hover) */}
                 <div
-                  className={`absolute -inset-1 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 blur opacity-0 transition-opacity ${
-                    periodo === opt.key
+                  className={`absolute -inset-1 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 blur opacity-0 transition-opacity ${periodo === opt.key
                       ? "opacity-70"
                       : "group-hover:opacity-60"
-                  }`}
+                    }`}
                 ></div>
 
                 {/* Fundo do botão */}
                 <div
-                  className={`relative rounded-full backdrop-blur-sm border ${
-                    periodo === opt.key
+                  className={`relative rounded-full backdrop-blur-sm border ${periodo === opt.key
                       ? "bg-black/40 border-orange-500/50"
                       : "bg-black/20 border-white/10"
-                  } px-4 py-2`}
+                    } px-4 py-2`}
                 >
                   {opt.label}
                 </div>
@@ -141,28 +136,79 @@ export default function Home() {
         {/* Lista de álbuns */}
         <div className="bg-black/30 backdrop-blur-lg rounded-2xl border border-orange-500/20 overflow-hidden">
           <ul className="divide-y divide-white/10">
-            {lista.map((album, i) => (
-              <li key={`${album.album}-${album.artista}`} className="group">
+            {/* Top 1 */}
+            {lista.slice(0, 1).map((album, i) => (
+              <li key={album.artista} className="group">
+                {/* Top 1 style aqui */}
                 <Link
                   href={`/artista/${encodeURIComponent(album.artista)}`}
                   className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5"
                 >
-                  <div className="absolute inset-0 -left-full group-hover:left-0 transition-left duration-500 ease-out bg-gradient-to-r from-transparent via-orange-500/10 to-transparent"></div>
-                  <div className="relative flex justify-between items-center flex-wrap gap-y-1">
-                    <div className="flex items-center gap-4 min-w-0">
+                  {/* style conteúdo aqui*/}
+                  <div className="relative flex justify-between items-center">
+                    <div className="flex items-center gap-4">
                       <span className="text-orange-400 font-bold w-8">
                         #{i + 1}
                       </span>
-                      <div className="min-w-0">
-                        <div className="font-medium text-lg group-hover:text-orange-300 transition-colors truncate">
-                          {album.album}
-                        </div>
-                        <div className="text-sm text-gray-400 truncate">
-                          por {album.artista}
-                        </div>
-                      </div>
+                      <span className="font-medium text-lg group-hover:text-orange-300 transition-colors">
+                        {album.artista}
+                      </span>
                     </div>
-                    <div className="text-orange-200 text-sm flex gap-3 whitespace-nowrap">
+                    <div className="text-orange-200 text-sm flex gap-3">
+                      <span>Last song played: {album.ultimaMusicaOuvida}</span>
+                      <span>Plays: {album.numeroRepetido}</span>
+                      <span>Time: {Math.floor(album.tempoOuvido)}m</span>
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+            {/* Top 2-5 */}
+            {lista.slice(1, 5).map((album, i) => (
+              <li key={album.artista} className="group">
+                {/* Top 2-5 style aqui */}
+                <Link
+                  href={`/artista/${encodeURIComponent(album.artista)}`}
+                  className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5"
+                >
+                  {/* style conteudo aqui */}
+                  <div className="relative flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <span className="text-orange-400 font-bold w-8">
+                        #{i + 2}
+                      </span>
+                      <span className="font-medium text-lg group-hover:text-orange-300 transition-colors">
+                        {album.artista}
+                      </span>
+                    </div>
+                    <div className="text-orange-200 text-sm flex gap-3">
+                      <span>Last song played: {album.ultimaMusicaOuvida}</span>
+                      <span>Plays: {album.numeroRepetido}</span>
+                      <span>Time: {Math.floor(album.tempoOuvido)}m</span>
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+            {/* Rest 6-100 */}
+            {lista.slice(5).map((album, i) => (
+              <li key={album.artista} className="group">
+                {/* 6-100 style aqui */}
+                <Link
+                  href={`/artista/${encodeURIComponent(album.artista)}`}
+                  className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5"
+                >
+                  {/* style conteudo aqui */}
+                  <div className="relative flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <span className="text-orange-400 font-bold w-8">
+                        #{i + 6}
+                      </span>
+                      <span className="font-medium text-lg group-hover:text-orange-300 transition-colors">
+                        {album.artista}
+                      </span>
+                    </div>
+                    <div className="text-orange-200 text-sm flex gap-3">
                       <span>Last song played: {album.ultimaMusicaOuvida}</span>
                       <span>Plays: {album.numeroRepetido}</span>
                       <span>Time: {Math.floor(album.tempoOuvido)}m</span>
