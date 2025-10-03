@@ -92,7 +92,7 @@ export function top100Artistas(inicio = null, fim = null) {
 
     acc[key].tempoOuvido += data.ms_played / 1000 / 60
 
-    acc[key].ultimaMusicaOuvida= !acc[key].ultimaMusicaOuvida || new Date(data.ts) > new Date(acc[key].ultimaMusicaOuvida) ? ultimaMusica : acc[key].ultimaMusicaOuvida
+    acc[key].ultimaMusicaOuvida = !acc[key].ultimaMusicaOuvida || new Date(data.ts) > new Date(acc[key].ultimaMusicaOuvida) ? ultimaMusica : acc[key].ultimaMusicaOuvida
 
     return acc
   }, {})
@@ -136,11 +136,11 @@ export function top100Musicas(inicio = null, fim = null) {
           musica: musica,
           numeroRepetido: 0,
           tempoOuvido: 0,
-          
+
         }
       }
       acc[key].numeroRepetido++
-      acc[key].tempoOuvido += data.ms_played / 1000 / 60 
+      acc[key].tempoOuvido += data.ms_played / 1000 / 60
 
 
 
@@ -159,7 +159,7 @@ export function top100Musicas(inicio = null, fim = null) {
 
 // top 100 albums
 
-export function top100Albums(inicio=null, fim=null) {
+export function top100Albums(inicio = null, fim = null) {
   if (!dadosHistory || dadosHistory.length === 0) {
     return [];
   }
@@ -190,7 +190,7 @@ export function top100Albums(inicio=null, fim=null) {
 
       acc[key].numeroRepetido++
       acc[key].tempoOuvido += data.ms_played / 1000 / 60
-      acc[key].ultimaMusicaOuvida= !acc[key].ultimaMusicaOuvida || new Date(data.ts) > new Date(acc[key].ultimaMusicaOuvida) ? ultimaMusica : acc[key].ultimaMusicaOuvida 
+      acc[key].ultimaMusicaOuvida = !acc[key].ultimaMusicaOuvida || new Date(data.ts) > new Date(acc[key].ultimaMusicaOuvida) ? ultimaMusica : acc[key].ultimaMusicaOuvida
     }
     return acc
   }, {})
@@ -341,3 +341,32 @@ export function filtrarDatas(periodo) {
 
 
 }
+
+
+
+export function searchBar(query) {
+
+  if (!query || typeof query !== "string") return [];
+
+  const lowerQuery = query.toLowerCase();
+
+  const musicas = top100Musicas() || ""
+  const artistas = top100Artistas() || ""
+  const albuns = top100Albums() || ""
+
+  const artistasFiltrados = artistas.filter(a =>
+    a.artista && a.artista.toLowerCase().includes(lowerQuery)
+  );
+  const musicasFiltradas = musicas.filter(m =>
+    m.musica && m.musica.toLowerCase().includes(lowerQuery)
+  );
+  const albunsFiltrados = albuns.filter(al =>
+    al.album && al.album.toLowerCase().includes(lowerQuery)
+  );
+  return {
+    artistas: artistasFiltrados,
+    musicas: musicasFiltradas,
+    albuns: albunsFiltrados
+  };
+};
+

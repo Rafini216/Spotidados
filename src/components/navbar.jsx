@@ -43,7 +43,7 @@ export default function Navbar() {
             </span>
           </a>
 
-          <a href="/pesquisa" className="relative px-3 py-1.5 rounded-lg group">
+          <a href="/searchbar" className="relative px-3 py-1.5 rounded-lg group">
             <div className="absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
             <span className="relative z-10 text-white hover:text-orange-300 transition-colors duration-300 font-medium">
               Search
