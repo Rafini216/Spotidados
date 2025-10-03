@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 export default function Home() {
   const [periodo, setPeriodo] = useState("all");
 
+  
   const lista = useMemo(() => {
     const { inicio, fim } = filtrarDatas(periodo);
     return top100Artistas(inicio, fim);

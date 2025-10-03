@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
-
-import {
+import { useState, useMemo } from "react";
+import {filtrarDatas,
+  top100Artistas,
   musicasDiferentes,
   tempoERepeatsArtista,
   percentagemArtista,
@@ -14,8 +15,18 @@ import {
 export default function ArtistPage() {
   const router = useRouter();
   const { name } = router.query;
+    const [periodo, setPeriodo] = useState("all");
+  
+    
+    const lista = useMemo(() => {
+      const { inicio, fim } = filtrarDatas(periodo);
+      return PagArtista(name, inicio, fim);
+    }, [periodo]);
+  
 
   if (!name) return <p>Loading...</p>;
+  const top100 = top100Artistas();
+  const artistIndex = top100.findIndex(a => a.artista === name);
   const top20 = PagArtista(name);
   const percentagem = percentagemArtista(name);
   const tempo = tempoERepeatsArtista(name);
@@ -26,6 +37,9 @@ export default function ArtistPage() {
       <div className="max-w-4xl mx-auto">
         {/* Título */}
         <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center md:text-left">
+          {artistIndex !== -1 && (
+            <span className="text-orange-400 font-bold">#{artistIndex + 1} — </span>
+          )}
           {name} — <span className="text-orange-400">Top 20 Songs</span>
         </h1>
 
@@ -52,11 +66,44 @@ export default function ArtistPage() {
             <div className="text-gray-300 text-sm">minutes listened</div>
           </div>
         </div>
+                  {/* Filtros — estilizados para combinar com o tema */}
+        <div className="flex flex-wrap gap-3 mb-6 justify-center">
+          {[
+            { key: "all", label: "All Time" },
+            { key: "1year", label: "Last Year" },
+            { key: "6months", label: "Last 6 Months" },
+            { key: "1month", label: "Last Month" },
+          ].map((opt) => (
+            <span key={opt.key} className="group">
+              <button
+                onClick={() => setPeriodo(opt.key)}
+                className="relative px-4 py-2 rounded-full font-medium text-sm text-orange-300 transition-all duration-300 overflow-hidden"
+              >
+                {/* Halo de destaque (ativo ou hover) */}
+                <div
+                  className={`absolute -inset-1 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 blur opacity-0 transition-opacity ${periodo === opt.key
+                      ? "opacity-70"
+                      : "group-hover:opacity-60"
+                    }`}
+                ></div>
 
+                {/* Fundo do botão */}
+                <div
+                  className={`relative rounded-full backdrop-blur-sm border px-4 py-2 ${periodo === opt.key
+                      ? "bg-black/40 border-orange-500/50 text-white"
+                      : "bg-black/20 border-white/10"
+                    }`}
+                >
+                  {opt.label}
+                </div>
+              </button>
+            </span>
+          ))}
+        </div>
         {/* Lista de músicas */}
         <div className="bg-black/30 backdrop-blur-lg rounded-2xl border border-orange-500/20 overflow-hidden">
           <ul className="divide-y divide-white/10">
-            {top20.map((music, i) => (
+            {lista.map((music, i) => (
               <li key={music.musica} className="group">
                 <div className="block px-6 py-4 relative overflow-hidden transition-all duration-300 hover:bg-white/5">
                   {/* Faixa de luz horizontal ao passar o mouse */}

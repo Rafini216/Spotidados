@@ -207,7 +207,7 @@ export function top100Albums(inicio = null, fim = null) {
 
 //top 20 de cada artista
 
-export function PagArtista(nome) {
+export function PagArtista(nome,  inicio = null, fim = null ) {
 
 
 
@@ -223,7 +223,11 @@ export function PagArtista(nome) {
   const contagemMusicas = musicas.reduce((acc, data) => {
     const musica = data.master_metadata_track_name
     const album = data.master_metadata_album_album_name
+    const dataTs = new Date(data.ts)
+    if (inicio && fim && (dataTs < inicio || dataTs > fim)) {
 
+      return acc
+    }
     if (musica) {
 
       const key = `${musica}-${album}`
@@ -359,7 +363,7 @@ export function searchBar(query) {
 
   if (!query || typeof query !== "string") return [];
 
-const { artistas, musicas, albuns } = getCachedTop100();
+  const { artistas, musicas, albuns } = getCachedTop100();
 
 
   const artistasFiltrados = artistas.filter(a =>
