@@ -85,18 +85,18 @@ export default function Pesquisa() {
                 onChange={inputHandler}
                 placeholder="Search artists, songs, albums..."
                 className="
-                                    w-full
-                                    pl-12 pr-4 py-3
-                                    rounded-xl
-                                    bg-black/30 backdrop-blur-md
-                                    border border-orange-500/30
-                                    text-white placeholder-gray-400
-                                    focus:outline-none 
-                                    focus:ring-2 focus:ring-orange-500/50 
-                                    focus:border-orange-500/60
-                                    transition-all duration-300
-                                    shadow-lg
-                                "
+                  w-full
+                  pl-12 pr-4 py-3
+                  rounded-xl
+                  bg-black/30 backdrop-blur-md
+                  border border-orange-500/30
+                  text-white placeholder-gray-400
+                  focus:outline-none 
+                  focus:ring-2 focus:ring-orange-500/50 
+                  focus:border-orange-500/60
+                  transition-all duration-300
+                  shadow-lg
+                "
               />
             </div>
           </div>

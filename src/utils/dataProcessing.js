@@ -66,16 +66,17 @@ export function top100Artistas(inicio = null, fim = null) {
   if (!dadosHistory || dadosHistory.length === 0) {
     return [];
   }
-
+ const inicioDate = inicio ? new Date(inicio) : null;
+  const fimDate = fim ? new Date(fim) : null;
 
   const contagemArtistas = dadosHistory.reduce((acc, data) => {
     const artista = data.master_metadata_album_artist_name
     const ultimaMusica = data.master_metadata_track_name
     const key = artista;
     if (!artista) return acc
-
+ 
     const dataTs = new Date(data.ts)
-    if (inicio && fim && (dataTs < inicio || dataTs > fim)) {
+    if (inicioDate && fimDate && (dataTs < inicioDate || dataTs > fimDate)) {
 
       return acc
     }
@@ -382,3 +383,14 @@ export function searchBar(query) {
   };
 };
 
+export function getSeasonDates(season, year = new Date().getFullYear()) {
+  const seasons = {
+  spring: { inicio: `${year}-03-01`, fim: `${year}-05-31` },
+    summer: { inicio: `${year}-06-01`, fim: `${year}-08-31` },
+    autumn: { inicio: `${year}-09-01`, fim: `${year}-11-30` },
+    winter: { inicio: `${year}-12-01`, fim: `${year + 1}-02-28` }
+  };
+  const { inicio, fim } = seasons[season];
+  
+  return {inicio,fim};
+}

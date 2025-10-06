@@ -24,7 +24,14 @@ export default function Navbar() {
           <span className="font-bold text-xl">SpotiDados</span>
         </a>
         {/* Efeito nos botões de texto */}
-        <nav className="hidden md:flex gap-6">
+       
+        <nav className="hidden md:flex gap-6"> 
+          <a href="/seasons" className="relative px-3 py-1.5 rounded-lg group">
+            <div className="absolute -inset-2 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+            <span className="relative z-10 text-white hover:text-orange-300 transition-colors duration-300 font-medium">
+              Seasons
+            </span>
+          </a>
           <a
             href="/top100Artistas"
             className="relative px-3 py-1.5 rounded-lg group"
