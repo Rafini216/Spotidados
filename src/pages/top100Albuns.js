@@ -155,7 +155,7 @@ export default function Home() {
                             #1
                           </span>
                           <span className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-300 to-pink-200">
-                            {lista[0].artista}
+                            {lista[0].album} - {lista[0].artista} 
                           </span>
                         </div>
                       </div>
@@ -200,7 +200,7 @@ export default function Home() {
                             #{idx + 2}
                           </span>
                           <span className="text-lg md:text-xl font-medium text-orange-200 group-hover:text-orange-100 transition-colors">
-                            {album.artista}
+                            {album.album} - {album.artista}
                           </span>
                         </div>
                         <div className="text-orange-200 text-sm flex flex-wrap gap-4">
@@ -244,7 +244,7 @@ export default function Home() {
                           #{idx + 4}
                         </span>
                         <span className="text-lg font-medium group-hover:text-orange-300 transition-colors">
-                          {album.artista}
+                          {album.album} - {album.artista}
                         </span>
                       </div>
                       <div className="text-orange-200 text-sm flex flex-wrap gap-4">
@@ -287,7 +287,7 @@ export default function Home() {
                           #{idx + 6}
                         </span>
                         <span className="font-medium group-hover:text-orange-300 transition-colors">
-                          {album.artista}
+                          {album.album} - {album.artista}
                         </span>
                       </div>
                       <div className="text-gray-400 text-sm flex flex-wrap gap-4">
